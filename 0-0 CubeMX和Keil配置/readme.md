@@ -15,10 +15,9 @@
 - Keil MDK: "MDK" = Microcontroller Development Kit, 微控制器开发套件, 由ARM公司提供的开发工具
 - IAR Embedded Workbench: IAR嵌入式工作台, 由IAR公司提供的开发工具
 - STM32CubeIDE: 由ST公司提供的开发工具
+- 其他第三方代码编辑器: Visual Studio, VSCode等, 其中VSCode有ST官方的拓展插件
 
-由于Keil较为易于使用，功能丰富，较为稳定，我们选择Keil MDK5作为开发环境。
-
-```比较习惯于使用VSCode也可以使用VSCode的插件进行开发，支持代码Intellisense，可以烧录代码，但不支持debug。因此建议也安装Keil MDK5。```
+其中Keil集成程度高，功能丰富，较为稳定；而VSCode更加轻量, 完全免费，在代码辅助等方面更加智能，在此介绍Keil MDK5和VSCode开发环境的安装和配置。
 
 ### 1.2 辅助软件
 
@@ -34,7 +33,9 @@
 
 ```注意使用仿真器是否需要安装驱动程序。J-Link和ST-Link驱动程序在文件夹中，可直接下载使用。```
 
-## 2. 安装Keil MDK5
+> 注意: Keil和VSCode的安装可以任选其一
+
+## 2.1. 安装Keil MDK5
 
 *我们坚定支持使用正版软件(确信)*\
 所以**QQ群**之类的地方*一定没有*破解软件的安装包。\
@@ -51,6 +52,40 @@
 8. 打开keygen_new2032.exe，运行破解程序。
 9. 粘贴CID，其他选项不需要更改，点击Generate，将生成的License复制到License Management下方的LIC输入框中，点击Add LIC，破解完成。
 
+## 2.2. 安装和配置VSCode
+
+1. 下载并安装VSCode: <https://code.visualstudio.com/>
+2. 安装stm32 VS Code Extension的依赖项:
+   - STM32CubeMX
+   - STM32CubeIDE ```注意(适用于stm32拓展v1.0.0): 安装时务必选择默认安装路径, 否则插件无法识别```
+   - STMCUFinder ```注意(适用于stm32拓展v1.0.0): 安装时务必选择默认安装路径, 否则插件无法识别```
+   - 安装Git: <https://git-scm.com/downloads>
+3. 安装完成后, 在左侧找到拓展商店, 安装我们会用到的以下插件:
+   - C/C++
+   - C/C++ Extension Pack
+   - CMake
+   - CMake Tools
+   - Cortex-Debug
+   - Arm Virtual Hardware
+   - Embedded Tools
+   - stm32 VS Code Extension
+   另外推荐的插件:
+   - Error Lens (更直观的错误提示)
+   - GitHub Copilot (AI代码感知和生成, 通过GitHub学生认证可以在在校期间免费使用)
+     或: TabNine (同样支持AI代码感知, 可免费使用, 但能力有限)
+   - Serial Monitor (内置串口监视器)
+4. 在代码可以烧录之前, 我们需要更新ST-Link的固件版本:
+   - 下载并安装STSW-LINK007: <https://www.st.com/en/development-tools/stsw-link007.html>
+   - 运行STSW-LINK007, 检测ST-Link设备, 点击Upgrade, 等待固件更新完成
+5. (仅限v1.0.0版本) 更改编译器路径: 在项目文件夹中找到launch.json, 将其中"miDebuggerPath"至"debugServerArgs"替换成自己的路径:
+
+   ```json
+      "miDebuggerPath": "C:/ST/STM32CubeIDE_1.12.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/arm-none-eabi-gdb.exe",
+      "miDebuggerServerAddress": "localhost:3333",
+      "debugServerPath": "C:/ST/STM32CubeIDE_1.12.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.stlink-gdb-server.win32_2.0.500.202301161003/tools/bin/ST-LINK_gdbserver.exe",
+      "debugServerArgs": "--stm32cubeprogrammer-path C:/ST/STM32CubeIDE_1.12.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.cubeprogrammer.win32_2.0.600.202301161003/tools/bin --swd --port-number 3333",
+   ```
+
 ## 3. 安装STM32CubeMX
 
 可直接按照安装向导提示安装。STM32Cube系列均为免费，无需破解等操作。
@@ -59,4 +94,4 @@
 
 > Author: Clive
 >
-> Updated: 2023/4/29
+> Updated: 2023/7/7
